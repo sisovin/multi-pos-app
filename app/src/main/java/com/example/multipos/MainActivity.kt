@@ -84,7 +84,8 @@ fun MultiPosApp() {
             HomeScreen(
                 onPayClick = { navController.navigate("cart") },
                 onBuyClick = { navController.navigate("allItems") },
-                onProfileClick = { navController.navigate("profile") }
+                onProfileClick = { navController.navigate("profile") },
+                onCartClick = { navController.navigate("cart") }
             )
         }
         composable("profile") {
