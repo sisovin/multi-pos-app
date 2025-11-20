@@ -22,15 +22,47 @@ android {
         }
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file("../../release.keystore")
+            storePassword = "password"
+            keyAlias = "release"
+            keyPassword = "password"
+        }
+        create("upload") {
+            storeFile = file("../../upload.keystore")
+            storePassword = "password"
+            keyAlias = "upload"
+            keyPassword = "password"
+        }
+    }
+
     buildTypes {
-        release {
-            isMinifyEnabled = false
+        getByName("debug") {
+            applicationIdSuffix = ".debug"
+        }
+        getByName("release") {
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            isDebuggable = (project.findProperty("enableLogsInRelease") as? String)?.toBoolean() ?: false
+            signingConfig = signingConfigs.getByName("release")
+        }
+        create("upload") {
+            initWith(getByName("release"))
+            isMinifyEnabled = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android.txt"),
+                "proguard-project.txt"
+            )
+            matchingFallbacks += listOf("release")
+            isDebuggable = (project.findProperty("enableLogsInRelease") as? String)?.toBoolean() ?: false
+            signingConfig = signingConfigs.getByName("upload")
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -48,6 +80,9 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+    }
+    lint {
+        disable += "MissingTranslation"
     }
 }
 
