@@ -29,3 +29,4 @@ google-services.json
 
 # App specific
 /app/build
+release.keystore
