@@ -22,6 +22,7 @@ import com.example.multipos.ui.screens.ProductDetailsScreen
 import com.example.multipos.ui.theme.MultiPOSTheme
 import dagger.hilt.android.AndroidEntryPoint
 import com.example.multipos.ui.screens.LoginScreen
+import com.example.multipos.ui.screens.ProfileScreen
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -82,7 +83,18 @@ fun MultiPosApp() {
         composable("home") {
             HomeScreen(
                 onPayClick = { navController.navigate("cart") },
-                onBuyClick = { navController.navigate("allItems") }
+                onBuyClick = { navController.navigate("allItems") },
+                onProfileClick = { navController.navigate("profile") }
+            )
+        }
+        composable("profile") {
+            ProfileScreen(
+                onBackClick = { navController.popBackStack() },
+                onLogoutClick = {
+                    navController.navigate("login") {
+                        popUpTo("home") { inclusive = true }
+                    }
+                }
             )
         }
         composable("allItems") {

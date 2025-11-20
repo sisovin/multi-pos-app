@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -32,10 +33,16 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+
 @Composable
 fun HomeScreen(
     onPayClick: () -> Unit,
-    onBuyClick: () -> Unit
+    onBuyClick: () -> Unit,
+    onProfileClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -49,19 +56,33 @@ fun HomeScreen(
                 .background(GreenMain)
                 .padding(24.dp)
         ) {
-            Column {
-                Text(
-                    text = "ចំនួនសរុបត្រូវបង់", // Total to pay
-                    color = White,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    text = "$0.00",
-                    color = White,
-                    fontSize = 36.sp,
-                    fontWeight = FontWeight.Bold
-                )
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Column {
+                    Text(
+                        text = "ចំនួនសរុបត្រូវបង់", // Total to pay
+                        color = White,
+                        fontSize = 20.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                    Text(
+                        text = "$0.00",
+                        color = White,
+                        fontSize = 36.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+                IconButton(onClick = onProfileClick) {
+                    Icon(
+                        imageVector = Icons.Default.Person,
+                        contentDescription = "Profile",
+                        tint = White,
+                        modifier = Modifier.size(32.dp)
+                    )
+                }
             }
         }
 
