@@ -14,11 +14,10 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -27,11 +26,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.multipos.ui.theme.DarkBlack
@@ -41,17 +38,19 @@ import com.example.multipos.ui.theme.White
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(
-    onLoginSuccess: () -> Unit,
-    onNavigateToSignup: () -> Unit
+fun SignupScreen(
+    onSignupSuccess: () -> Unit,
+    onNavigateToLogin: () -> Unit
 ) {
+    var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(DarkBlack) // Simulating Overlay/Background
+            .background(DarkBlack)
     ) {
         Column(
             modifier = Modifier
@@ -61,24 +60,37 @@ fun LoginScreen(
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "សូមស្វាគមន៍", // Welcome
+                text = "បង្កើតគណនីថ្មី", // Create New Account
                 color = White,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Bold
             )
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(
-                text = "ចូលគណនីរបស់អ្នក", // Login to your account
-                color = White,
-                fontSize = 18.sp
-            )
             Spacer(modifier = Modifier.height(32.dp))
+
+            // Name Input
+            OutlinedTextField(
+                value = name,
+                onValueChange = { name = it },
+                placeholder = { Text("ឈ្មោះ", color = GrayPlaceholder) }, // Name
+                shape = RoundedCornerShape(12.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedContainerColor = White,
+                    unfocusedContainerColor = White,
+                    focusedBorderColor = GreenMain,
+                    unfocusedBorderColor = Color.Transparent,
+                    focusedTextColor = DarkBlack,
+                    unfocusedTextColor = DarkBlack
+                ),
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true
+            )
+            Spacer(modifier = Modifier.height(16.dp))
 
             // Email Input
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
-                placeholder = { Text("Email", color = GrayPlaceholder) },
+                placeholder = { Text("អ៊ីមែល", color = GrayPlaceholder) }, // Email
                 shape = RoundedCornerShape(12.dp),
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedContainerColor = White,
@@ -97,7 +109,28 @@ fun LoginScreen(
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
-                placeholder = { Text("Password", color = GrayPlaceholder) },
+                placeholder = { Text("ពាក្យសម្ងាត់", color = GrayPlaceholder) }, // Password
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                shape = RoundedCornerShape(12.dp),
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedContainerColor = White,
+                    unfocusedContainerColor = White,
+                    focusedBorderColor = GreenMain,
+                    unfocusedBorderColor = Color.Transparent,
+                    focusedTextColor = DarkBlack,
+                    unfocusedTextColor = DarkBlack
+                ),
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Confirm Password Input
+            OutlinedTextField(
+                value = confirmPassword,
+                onValueChange = { confirmPassword = it },
+                placeholder = { Text("បញ្ជាក់ពាក្យសម្ងាត់", color = GrayPlaceholder) }, // Confirm Password
                 visualTransformation = PasswordVisualTransformation(),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
                 shape = RoundedCornerShape(12.dp),
@@ -114,31 +147,22 @@ fun LoginScreen(
             )
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Login Button
+            // Register Button
             Button(
-                onClick = onLoginSuccess,
+                onClick = onSignupSuccess,
                 colors = ButtonDefaults.buttonColors(containerColor = GreenMain),
                 shape = RoundedCornerShape(12.dp),
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(50.dp)
             ) {
-                Text("ចូល", color = White, fontSize = 18.sp, fontWeight = FontWeight.Bold) // Login
+                Text("ចុះឈ្មោះ", color = White, fontSize = 18.sp, fontWeight = FontWeight.Bold) // Register
             }
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Forgot Password
-            TextButton(onClick = { /* TODO */ }) {
-                Text("ភ្លេចពាក្យសម្ងាត់?", color = GrayPlaceholder) // Forgot Password?
-            }
-
-            // Create Account
-            TextButton(onClick = onNavigateToSignup) {
-                Text(
-                    "បង្កើតគណនី", // Create Account
-                    color = White,
-                    style = TextStyle(textDecoration = TextDecoration.Underline)
-                )
+            // Back to Login
+            TextButton(onClick = onNavigateToLogin) {
+                Text("មានគណនីរួចហើយ? ចូល", color = GrayPlaceholder) // Already have account? Login
             }
         }
     }

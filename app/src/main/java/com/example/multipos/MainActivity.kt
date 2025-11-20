@@ -16,6 +16,7 @@ import com.example.multipos.ui.screens.CartScreen
 import com.example.multipos.ui.screens.HomeScreen
 import com.example.multipos.ui.screens.LauncherScreen
 import com.example.multipos.ui.screens.LoginScreen
+import com.example.multipos.ui.screens.SignupScreen
 import com.example.multipos.ui.theme.MultiPOSTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -57,6 +58,21 @@ fun MultiPosApp() {
                     navController.navigate("home") {
                         popUpTo("login") { inclusive = true }
                     }
+                },
+                onNavigateToSignup = {
+                    navController.navigate("signup")
+                }
+            )
+        }
+        composable("signup") {
+            SignupScreen(
+                onSignupSuccess = {
+                    navController.navigate("home") {
+                        popUpTo("login") { inclusive = true }
+                    }
+                },
+                onNavigateToLogin = {
+                    navController.popBackStack()
                 }
             )
         }
