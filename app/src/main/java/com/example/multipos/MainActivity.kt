@@ -122,7 +122,9 @@ fun MultiPosApp() {
             )
         }
         composable("cart") {
-            CartScreen()
+            CartScreen(
+                onBackClick = { navController.popBackStack() }
+            )
         }
     }
 }
