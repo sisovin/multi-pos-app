@@ -18,6 +18,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import com.example.multipos.ui.theme.DarkBlack
+import com.example.multipos.ui.theme.GrayLight
+import com.example.multipos.ui.theme.GreenMain
+import com.example.multipos.ui.theme.White
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
@@ -44,9 +48,6 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.example.multipos.R
 import com.example.multipos.data.model.Product
-import com.example.multipos.ui.theme.GrayLight
-import com.example.multipos.ui.theme.GreenMain
-import com.example.multipos.ui.theme.White
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
