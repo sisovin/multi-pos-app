@@ -28,13 +28,14 @@ import androidx.compose.ui.unit.sp
 import com.example.multipos.ui.theme.GrayLight
 import com.example.multipos.ui.theme.GreenMain
 import com.example.multipos.ui.theme.White
+import com.example.multipos.data.model.Product
 
 @Composable
 fun CartScreen() {
     val cartItems = listOf(
-        Product("កែកប៊ឺរី", 12.00),
-        Product("ផ្លែប៉ោម", 8.00),
-        Product("តែខ្មៅ", 12.00)
+        Product(1, "កែកប៊ឺរី", 12.00),
+        Product(2, "ផ្លែប៉ោម", 8.00),
+        Product(3, "តែខ្មៅ", 12.00)
     )
     val total = cartItems.sumOf { it.price }
 

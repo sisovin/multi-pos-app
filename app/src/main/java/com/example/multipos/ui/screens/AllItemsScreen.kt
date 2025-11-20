@@ -45,18 +45,18 @@ import com.example.multipos.ui.theme.GrayPlaceholder
 import com.example.multipos.ui.theme.GreenMain
 import com.example.multipos.ui.theme.White
 
-data class Product(val name: String, val price: Double)
+import androidx.compose.foundation.clickable
+import com.example.multipos.data.model.Product
+import com.example.multipos.data.repository.ProductRepository
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AllItemsScreen(onCheckoutClick: () -> Unit) {
+fun AllItemsScreen(
+    onCheckoutClick: () -> Unit,
+    onProductClick: (Int) -> Unit
+) {
     var searchQuery by remember { mutableStateOf("") }
-    val products = listOf(
-        Product("កែកប៊ឺរី", 12.00), // Berry Cake
-        Product("ផ្លែប៉ោម", 8.00), // Apple
-        Product("តែខ្មៅ", 10.00), // Black Tea
-        Product("គ្រាប់ឈើកាស្យូ", 25.00) // Cashew Nuts
-    )
+    val products = ProductRepository.products
 
     Column(
         modifier = Modifier
@@ -105,7 +105,7 @@ fun AllItemsScreen(onCheckoutClick: () -> Unit) {
             modifier = Modifier.weight(1f)
         ) {
             items(products) { product ->
-                ProductCard(product)
+                ProductCard(product, onClick = { onProductClick(product.id) })
             }
         }
 
@@ -124,11 +124,13 @@ fun AllItemsScreen(onCheckoutClick: () -> Unit) {
 }
 
 @Composable
-fun ProductCard(product: Product) {
+fun ProductCard(product: Product, onClick: () -> Unit) {
     Card(
         colors = CardDefaults.cardColors(containerColor = White),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-        modifier = Modifier.height(150.dp)
+        modifier = Modifier
+            .height(150.dp)
+            .clickable(onClick = onClick)
     ) {
         Column(
             modifier = Modifier

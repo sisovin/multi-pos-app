@@ -15,10 +15,13 @@ import com.example.multipos.ui.screens.AllItemsScreen
 import com.example.multipos.ui.screens.CartScreen
 import com.example.multipos.ui.screens.HomeScreen
 import com.example.multipos.ui.screens.LauncherScreen
-import com.example.multipos.ui.screens.LoginScreen
 import com.example.multipos.ui.screens.SignupScreen
+import androidx.navigation.NavType
+import androidx.navigation.navArgument
+import com.example.multipos.ui.screens.ProductDetailsScreen
 import com.example.multipos.ui.theme.MultiPOSTheme
 import dagger.hilt.android.AndroidEntryPoint
+import com.example.multipos.ui.screens.LoginScreen
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -84,7 +87,24 @@ fun MultiPosApp() {
         }
         composable("allItems") {
             AllItemsScreen(
-                onCheckoutClick = { navController.navigate("cart") }
+                onCheckoutClick = { navController.navigate("cart") },
+                onProductClick = { productId ->
+                    navController.navigate("productDetails/$productId")
+                }
+            )
+        }
+        composable(
+            route = "productDetails/{productId}",
+            arguments = listOf(navArgument("productId") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val productId = backStackEntry.arguments?.getInt("productId") ?: return@composable
+            ProductDetailsScreen(
+                productId = productId,
+                onBackClick = { navController.popBackStack() },
+                onAddToCart = { id, quantity ->
+                    // TODO: Implement Add to Cart logic
+                    navController.popBackStack()
+                }
             )
         }
         composable("cart") {
