@@ -103,7 +103,8 @@ fun MultiPosApp() {
                 onCheckoutClick = { navController.navigate("cart") },
                 onProductClick = { productId ->
                     navController.navigate("productDetails/$productId")
-                }
+                },
+                onBackClick = { navController.popBackStack() }
             )
         }
         composable(
