@@ -70,7 +70,7 @@ fun CartScreen(
                         Icon(Icons.Default.ArrowBack, contentDescription = "Back", tint = White)
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(containerColor = GreenMain)
+                colors = TopAppBarDefaults.topAppBarColors(containerColor =  DarkBlack)
             )
         }
     ) { paddingValues ->
